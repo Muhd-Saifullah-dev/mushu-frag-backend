@@ -3,7 +3,7 @@ const app=express()
 const reqResInspector=require("express-req-res-inspector")
 const {globaleErrorMiddleware}=require("./middlewares/globalError.middleware")
 const rootRouter = require("./routes")
-
+const cors=require("cors")
 
 
 app.use(reqResInspector())
@@ -21,5 +21,9 @@ app.get("/api/v1/health-check", (req, res, next) => {
   });
 app.use("/api/v1",rootRouter);
 
+app.use(cors({
+  credentials:true,
+  origin:"/*"
+}))
 
 module.exports=app

@@ -1,6 +1,6 @@
 const Product=require("../../models/product.model");
 const { okResponse } = require("../../utils/handlers.util");
-
+const { BadRequestError} =require("../../customError")
 
 const addFragence=async(req,res,next)=>{
     try {
@@ -44,3 +44,20 @@ const addFragence=async(req,res,next)=>{
         next(error)
     }
 }
+
+const deletefragence=async(req,res,next)=>{
+try {
+    const { id }=req.params
+    const deleteProduct=await Product.findByIdAndDelete(id)
+    if(!deleteProduct){
+      throw new BadRequestError("fragence not found")
+    }
+    okResponse(res,200,"fragence deleted successfully")
+} catch (error) {
+  console.log("error in delete fragence",error)
+  next(error)
+}
+
+}
+
+module.exports={deletefragence, addFragence}
