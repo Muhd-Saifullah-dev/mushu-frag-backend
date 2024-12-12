@@ -22,7 +22,7 @@ const addFragence=async(req,res,next)=>{
 
           const uploadedImage = await new Promise((resolve, reject) => {
             cloudinary.uploader
-              .upload_stream({ folder: "profile_pictures" }, (error, result) => {
+              .upload_stream({ folder: "mushu-frag-images" }, (error, result) => {
                 if (error) reject(error);
                 else resolve(result);
               })
