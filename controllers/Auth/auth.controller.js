@@ -1,29 +1,33 @@
 const User=require("../../models/user.model")
 const {BadRequestError }=require('../../customError');
-const { okResponse } = require("../../utils/handlers.util");
+const { okResponse, handleError } = require("../../utils/handlers.util");
 
 
 const signupUser=async(req,res,next)=>{
  try {
        const {email,username,password}=req.body;
        
-       let user=await User.findOne({email})
+       let user=await User.findOne({
+        $or:[{email},{username}]})
        if(user){
            throw new BadRequestError("This email is already registered");
        }
+       
        user=new User({
            email,
            password,
            username
        })
     await user.save()
-   
+  
+
     return okResponse(res,201,"User registered successfully",{
        email: user.email,
        username: user.username,
     })
  } catch (error) {
-    console.log("Error in signup", error);
+   
+    console.log("Error in signup",error);
     next(error);
  }
 

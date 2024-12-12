@@ -1,7 +1,7 @@
 const Product=require("../../models/product.model");
 const { okResponse } = require("../../utils/handlers.util");
 const { BadRequestError} =require("../../customError")
-
+const cloudinary=require("../../configs/cloudhinary.config")
 const addFragence=async(req,res,next)=>{
     try {
         const {title,description,price,discountPrice,category}=req.body;
@@ -44,6 +44,9 @@ const addFragence=async(req,res,next)=>{
         next(error)
     }
 }
+
+
+
 
 const deletefragence=async(req,res,next)=>{
 try {

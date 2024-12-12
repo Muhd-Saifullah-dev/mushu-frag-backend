@@ -7,11 +7,10 @@ const cors=require("cors")
 
 
 app.use(reqResInspector())
-app.use(express.json({limit:"100mb"}))
+app.use(express.json())
 app.use(express.urlencoded({
     extended:true
 }))
-app.use(globaleErrorMiddleware)
 app.get("/api/v1/health-check", (req, res, next) => {
     return res.status(200).json({
       success: true,
@@ -25,5 +24,6 @@ app.use(cors({
   credentials:true,
   origin:"/*"
 }))
+app.use(globaleErrorMiddleware)
 
 module.exports=app
